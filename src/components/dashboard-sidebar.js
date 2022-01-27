@@ -18,30 +18,30 @@ import { NavItem } from './nav-item';
 
 const items = [
   {
-    href: '/',
+    href: '/dashboard',
     icon: (<ChartBarIcon fontSize="small" />),
     title: 'Beranda'
   },
   {
-    href: '/customers',
+    href: '/dashboard/customer',
     icon: (<UsersIcon fontSize="small" />),
     title: 'Permintaan'
   },
   {
-    href: '/products',
+    href: '/dashboard/product',
     icon: (<ShoppingBagIcon fontSize="small" />),
     title: 'Produk'
   },
   {
-    href: '/account',
+    href: '/dashboard/account',
     icon: (<UserIcon fontSize="small" />),
     title: 'Pengguna'
   },
-  {
-    href: '/settings',
-    icon: (<CogIcon fontSize="small" />),
-    title: 'Pengaturan'
-  },
+  // {
+  //   href: '/settings',
+  //   icon: (<CogIcon fontSize="small" />),
+  //   title: 'Pengaturan'
+  // },
   // {
   //   href: '/login',
   //   icon: (<LockIcon fontSize="small" />),

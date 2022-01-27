@@ -2,9 +2,9 @@ import Head from 'next/head';
 import { Box, Container, Grid, Typography } from '@mui/material';
 // import { AccountProfile } from '../components/account/account-profile';
 // import { AccountProfileDetails } from '../components/account/account-profile-details';
-import { DashboardLayout } from '../components/dashboard-layout';
-import {AccountList} from '../components/account/account-list';
-import { customers } from '../__mocks__/customers';
+import { DashboardLayout } from '../../../components/dashboard-layout';
+import {AccountList} from '../../../components/account/account-list';
+import { customers } from '../../../__mocks__/customers';
 
 const Account = () => (
   <>

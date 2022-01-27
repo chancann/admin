@@ -47,7 +47,7 @@ const NotFound = () => (
             />
           </Box>
           <NextLink
-            href="/"
+            href="/dashboard"
             passHref
           >
             <Button

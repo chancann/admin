@@ -5,15 +5,15 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Facebook as FacebookIcon } from '../icons/facebook';
-import { Google as GoogleIcon } from '../icons/google';
+// import { Facebook as FacebookIcon } from '../icons/facebook';
+// import { Google as GoogleIcon } from '../icons/google';
 
 const Login = () => {
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
-      email: 'demo@devias.io',
-      password: 'Password123'
+      email: '',
+      password: ''
     },
     validationSchema: Yup.object({
       email: Yup
@@ -30,14 +30,14 @@ const Login = () => {
           'Password is required')
     }),
     onSubmit: () => {
-      router.push('/');
+      router.push('/dashboard');
     }
   });
 
   return (
     <>
       <Head>
-        <title>Login | Material Kit</title>
+        <title>Login</title>
       </Head>
       <Box
         component="main"
@@ -49,7 +49,8 @@ const Login = () => {
         }}
       >
         <Container maxWidth="sm">
-          <NextLink
+          <Typography variant="h5" align='center'>Selamat datang</Typography>
+          {/* <NextLink
             href="/"
             passHref
           >
@@ -59,9 +60,9 @@ const Login = () => {
             >
               Dashboard
             </Button>
-          </NextLink>
+          </NextLink> */}
           <form onSubmit={formik.handleSubmit}>
-            <Box sx={{ my: 3 }}>
+            {/* <Box sx={{ my: 3 }}>
               <Typography
                 color="textPrimary"
                 variant="h4"
@@ -126,7 +127,7 @@ const Login = () => {
               >
                 or login with email address
               </Typography>
-            </Box>
+            </Box> */}
             <TextField
               error={Boolean(formik.touched.email && formik.errors.email)}
               fullWidth
@@ -161,11 +162,14 @@ const Login = () => {
                 size="large"
                 type="submit"
                 variant="contained"
+                onClick={()=>{
+                  document.cookie = 'token=123; path=/'
+                }}
               >
-                Sign In Now
+                Sign In 
               </Button>
             </Box>
-            <Typography
+            {/* <Typography
               color="textSecondary"
               variant="body2"
             >
@@ -185,7 +189,7 @@ const Login = () => {
                   Sign Up
                 </Link>
               </NextLink>
-            </Typography>
+            </Typography> */}
           </form>
         </Container>
       </Box>
