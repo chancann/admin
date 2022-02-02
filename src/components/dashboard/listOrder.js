@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import moment from 'moment';
 // import { v4 as uuid } from 'uuid';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -16,6 +17,11 @@ import {
 } from '@mui/material';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { SeverityPill } from '../severity-pill';
+import baseURL from "../../api/baseURL";
+import Cookies from 'js-cookie';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/router';
 
 const orders = [
   {
@@ -29,17 +35,6 @@ const orders = [
     createdAt: '03/01/2022',
     status: 'Menunggu'
   },
-  // {
-  //   // id: uuid(),
-  //   id:3761230938900002,
-  //   ref: 'CDD1048',
-  //   amount: 25.1,
-  //   customer: {
-  //     name: 'Cao Yu'
-  //   },
-  //   createdAt: 1555016400000,
-  //   status: 'delivered'
-  // },
   {
     // id: uuid(),
     id:3761230938900002,
@@ -86,8 +81,81 @@ const orders = [
   }
 ];
 
-export const LatestOrders = (props) => (
-  <Card {...props}>
+
+export const LatestOrders = (props) => {
+const router = useRouter()
+
+  const acceptHandler = async (id) => {
+    try {
+      const token = Cookies.get('token')
+  
+      const response = await baseURL.post(`api/user/verify/${id}`, {
+        headers: {
+          Authorization: token
+        }
+      })
+  
+      if (response.data.status === 200) {
+        toast.success('Verified', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+
+          router.reload(window.location.pathname)
+      }
+  
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const discardHandler = async (id) => {
+    try {
+      const token = Cookies.get('token')
+  
+      const response = await baseURL.delete(`api/user/${id}`, {
+        headers: {
+          Authorization: token
+        }
+      })
+  
+      if (response.data.status === 200) {
+        toast.warning('User Declined!', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+
+          router.reload(window.location.pathname)
+      }
+  
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  return (
+    <Card {...props}>
+    <ToastContainer
+                  position="top-center"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                />
     <CardHeader title="Permintaan" />
     <PerfectScrollbar>
       <Box sx={{ minWidth: 800 }}>
@@ -98,7 +166,7 @@ export const LatestOrders = (props) => (
                 NIK
               </TableCell>
               <TableCell>
-                Nama Lengkap
+                Name
               </TableCell>
               <TableCell sortDirection="desc">
                 <Tooltip
@@ -109,39 +177,35 @@ export const LatestOrders = (props) => (
                     active
                     direction="desc"
                   >
-                    Tanggal
+                    Date
                   </TableSortLabel>
                 </Tooltip>
               </TableCell>
               <TableCell>
-                Status
+                Actions
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {orders.map((order) => (
+            {props.data?.map((order) => (
               <TableRow
                 hover
-                key={order.id}
+                key={order._id}
               >
                 <TableCell>
-                  {order.id}
+                  {order.nik}
                 </TableCell>
                 <TableCell>
-                  {order.customer.name}
+                  {order.nama_lengkap}
                 </TableCell>
                 <TableCell>
-                  {order.createdAt}
+                  {moment(order.createdAt).format('DD/MM/yyyy')}
                 </TableCell>
                 <TableCell>
-                  <SeverityPill
-                    color={(order.status === 'Diterima' && 'success')
-                    || (order.status === 'Ditolak' && 'error')
-                    || 'warning'}
-                  >
-                    {order.status}
-                  </SeverityPill>
+                  <Button onClick={()=> {acceptHandler(order._id)}}>Terima</Button>
+                  <Button onClick={()=> {discardHandler(order._id)}}>Tolak</Button>
                 </TableCell>
+                
               </TableRow>
             ))}
           </TableBody>
@@ -155,14 +219,7 @@ export const LatestOrders = (props) => (
         p: 2
       }}
     >
-      <Button
-        color="primary"
-        endIcon={<ArrowRightIcon fontSize="small" />}
-        size="small"
-        variant="text"
-      >
-        Lihat Semua
-      </Button>
     </Box>
   </Card>
-);
+  )
+}

@@ -1,15 +1,18 @@
 import Head from 'next/head';
-import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-// import { Facebook as FacebookIcon } from '../icons/facebook';
-// import { Google as GoogleIcon } from '../icons/google';
+import Cookies from 'js-cookie';
+import jwt_decode from "jwt-decode";
+import baseURL from '../api/baseURL';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const router = useRouter();
+
+  const notify = () => toast();
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -29,8 +32,38 @@ const Login = () => {
         .required(
           'Password is required')
     }),
-    onSubmit: () => {
-      router.push('/dashboard');
+    onSubmit: async (data) => {
+      try {
+        const doLogin = await baseURL.post("/api/user/login", data);
+        if (doLogin.data.status === 200){
+          const decoded = jwt_decode(doLogin.data.data.token)
+          if (decoded.role === 'admin'){
+          Cookies.set('token', doLogin.data.data.token, {expires:1})
+          toast.success('Welcome to dashboard!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+          router.push('/dashboard')
+          } else {
+            toast.warn('Wrong credentials!', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              });
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   });
 
@@ -162,10 +195,19 @@ const Login = () => {
                 size="large"
                 type="submit"
                 variant="contained"
-                onClick={()=>{
-                  document.cookie = 'token=123; path=/'
-                }}
+                onClick={notify}
               >
+                <ToastContainer
+                  position="top-right"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                />
                 Sign In 
               </Button>
             </Box>
@@ -195,6 +237,6 @@ const Login = () => {
       </Box>
     </>
   );
-};
+};  
 
 export default Login;

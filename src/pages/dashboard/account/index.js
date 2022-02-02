@@ -3,10 +3,13 @@ import { Box, Container, Grid, Typography } from '@mui/material';
 // import { AccountProfile } from '../components/account/account-profile';
 // import { AccountProfileDetails } from '../components/account/account-profile-details';
 import { DashboardLayout } from '../../../components/dashboard-layout';
-import {AccountList} from '../../../components/account/account-list';
+import { AccountList } from '../../../components/dashboard/account-list';
+import { AccountListToolbar } from '../../../components/account/account-list-toolbar';
 import { customers } from '../../../__mocks__/customers';
+// import { getServerSideProps } from '..';
+import baseURL from '../../../api/baseURL';
 
-const Account = () => (
+const Account = ({user}) => (
   <>
     <Head>
       <title>
@@ -21,13 +24,14 @@ const Account = () => (
       }}
     >
       <Container maxWidth="lg">
-        <Typography
+        <AccountListToolbar/>
+        {/* <Typography
           sx={{ mb: 3 }}
           variant="h4"
         >
           Pengguna
-        </Typography>
-        <AccountList customers={customers}/>
+        </Typography> */}
+        <AccountList data={user}/>
         {/* <Grid
           container
           spacing={3}
@@ -59,5 +63,16 @@ Account.getLayout = (page) => (
     {page}
   </DashboardLayout>
 );
+
+export async function getServerSideProps(context) {
+  const responseUser = await baseURL.get("/api/user")
+    const user = responseUser.data.data.data
+    // console.log(user)
+
+  
+  return {
+    props: {user}, // will be passed to the page component as props
+  }
+}
 
 export default Account;

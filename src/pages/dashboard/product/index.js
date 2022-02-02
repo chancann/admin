@@ -1,9 +1,11 @@
 import Head from 'next/head';
 import { Box, Container, Grid, Pagination } from '@mui/material';
-import { products } from '../../../__mocks__/products';
+// import { products } from '../../../__mocks__/products';
 import { ProductListToolbar } from '../../../components/product/product-list-toolbar';
-import { ProductCard } from '../../../components/product/product-card';
+// import { ProductCard } from '../../../components/product/product-card';
 import { DashboardLayout } from '../../../components/dashboard-layout';
+// import { LatestOrders } from '../../../components/dashboard/listOrder';
+import { LatestProducts } from '../../../components/dashboard/listProduct';
 
 const Products = () => (
   <>
@@ -21,7 +23,16 @@ const Products = () => (
     >
       <Container maxWidth={false}>
         <ProductListToolbar />
-        <Box sx={{ pt: 3 }}>
+        <Box
+            item
+            lg={12}
+            md={6}
+            xl={3}
+            xs={12}
+          >
+            <LatestProducts/>
+          </Box>
+        {/* <Box sx={{ pt: 3 }}>
           <Grid
             container
             spacing={3}
@@ -52,6 +63,7 @@ const Products = () => (
             size="small"
           />
         </Box>
+         */}
       </Container>
     </Box>
   </>

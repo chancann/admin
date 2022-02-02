@@ -6,14 +6,37 @@ import {
   TextField,
   InputAdornment,
   SvgIcon,
+  Modal,
   Typography
 } from '@mui/material';
+import { fromUnixTime } from 'date-fns';
 import { Download as DownloadIcon } from '../../icons/download';
 import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
+import { useState } from 'react';
+import { CreateFile } from '../dashboard/create';
+// import {open, setOpen, handleOpen, handleCLose} from '../settings/modal'
 
-export const ProductListToolbar = (props) => (
-  <Box {...props}>
+
+
+export const AccountListToolbar = (props) => {
+const [open, setOpen] = useState(false)
+const handleOpen = () => setOpen(true);
+const handleClose = () => setOpen(false);
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
+return <Box {...props}>
     <Box
       sx={{
         alignItems: 'center',
@@ -27,7 +50,7 @@ export const ProductListToolbar = (props) => (
         sx={{ m: 1 }}
         variant="h4"
       >
-        Produk
+        Pengguna
       </Typography>
       <Box sx={{ m: 1 }}>
         {/* <Button
@@ -42,12 +65,17 @@ export const ProductListToolbar = (props) => (
         >
           Export
         </Button> */}
-        {/* <Button
-          color="primary"
-          variant="contained"
-        >
-          Tambah Produk
-        </Button> */}
+        <Button variant='text' onClick={handleOpen}>Tambah Akun</Button>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <CreateFile/>
+            </Box>
+          </Modal>
       </Box>
     </Box>
     <Box sx={{ mt: 3 }}>
@@ -68,7 +96,7 @@ export const ProductListToolbar = (props) => (
                   </InputAdornment>
                 )
               }}
-              placeholder="Cari Produk"
+              placeholder="Cari Pengguna"
               variant="outlined"
             />
           </Box>
@@ -76,4 +104,5 @@ export const ProductListToolbar = (props) => (
       </Card>
     </Box>
   </Box>
-);
+};
+

@@ -1,12 +1,14 @@
 import Head from 'next/head';
-import { Box, Container } from '@mui/material';
-import { CustomerListResults } from '../../../components/customer/customer-list-results';
+import { Box, Container, Pagination } from '@mui/material';
+// import { CustomerListResults } from '../../../components/customer/customer-list-results';
 import { CustomerListToolbar } from '../../../components/customer/customer-list-toolbar';
 import { DashboardLayout } from '../../../components/dashboard-layout';
-import { customers } from '../../../__mocks__/customers';
-import { LatestOrders } from 'src/components/dashboard/latest-orders';
+// import { customers } from '../../../__mocks__/customers';
+import { LatestOrders } from '../../../components/dashboard/listOrder';
+import baseURL from '../../../api/baseURL';
+// import Cookies from 'js-cookie';
 
-const Customers = () => (
+const Customers = ({reqUser}) => (
   <>
     <Head>
       <title>
@@ -23,7 +25,20 @@ const Customers = () => (
       <Container maxWidth={false}>
         <CustomerListToolbar />
         <Box sx={{ mt: 3 }}>
-          <LatestOrders />
+          <LatestOrders data={reqUser}/>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            pt: 3
+          }}
+        >
+          <Pagination
+            color="primary"
+            count={3}
+            size="small"
+          />
         </Box>
       </Container>
     </Box>
@@ -35,4 +50,13 @@ Customers.getLayout = (page) => (
   </DashboardLayout>
 );
 
+export async function getServerSideProps(context) {
+  const responseReqUser = await baseURL.get('/api/user/request')
+  const reqUser = responseReqUser.data.data
+  // console.log(reqUser);
+
+  return {
+    props: {reqUser}, // will be passed to the page component as props
+  }
+}
 export default Customers;

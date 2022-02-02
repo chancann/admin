@@ -1,6 +1,23 @@
 import { Avatar, Box, Card, CardContent, Grid, Typography } from '@mui/material';
+// import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import PeopleIcon from '@mui/icons-material/PeopleOutlined';
 
-export const Budget = (props) => (
+// import Cookies from 'js-cookie';
+// import jwt_decode from "jwt-decode";
+// import baseURL from '../../api/baseURL';
+
+// const userAccount = async (data) => {
+//   try{
+//     const total = await baseURL.get("/api/product", data)
+//     console.log(total);
+//   } catch (error){
+//     console.log(error);
+//   }
+// }
+
+
+
+export const TotalCustomers = (props) => (
   <Card {...props}>
     <CardContent>
       <Grid
@@ -14,26 +31,28 @@ export const Budget = (props) => (
             gutterBottom
             variant="overline"
           >
-            Permintaan
+            Total Akun
           </Typography>
           <Typography
             color="textPrimary"
             variant="h4"
           >
-            5
+            {props.totalCustomer}
           </Typography>
         </Grid>
         <Grid item>
           <Avatar
             sx={{
-              backgroundColor: 'error.main',
+              backgroundColor: 'success.main',
               height: 56,
               width: 56
             }}
-          > 
+          >
+            <PeopleIcon />
           </Avatar>
         </Grid>
       </Grid>
     </CardContent>
   </Card>
 );
+

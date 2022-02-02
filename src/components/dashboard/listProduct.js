@@ -1,19 +1,21 @@
-import { formatDistanceToNow, subHours } from 'date-fns';
-import { v4 as uuid } from 'uuid';
+import moment from 'moment';
+// import { v4 as uuid } from 'uuid';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Box,
   Button,
   Card,
   CardHeader,
-  Divider,
-  IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+  Tooltip
 } from '@mui/material';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { SeverityPill } from '../severity-pill';
 
 // const products = [
 //   {
@@ -49,7 +51,77 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 // ];
 
 export const LatestProducts = (props) => (
-  <></>
+    <Card {...props}>
+      <CardHeader title="Produk" />
+      <PerfectScrollbar>
+        <Box sx={{ minWidth: 800 }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  Title Product
+                </TableCell>
+                <TableCell>
+                  Author
+                </TableCell>
+                <TableCell sortDirection="desc">
+                  <Tooltip
+                    enterDelay={300}
+                    title="Sort"
+                  >
+                    <TableSortLabel
+                      active
+                      direction="desc"
+                    >
+                      Date
+                    </TableSortLabel>
+                  </Tooltip>
+                </TableCell>
+                <TableCell>
+                  Actions
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {props.data?.map((order) => (
+                <TableRow
+                  hover
+                  key={order._id}
+                >
+                  <TableCell>
+                    {order.nik}
+                  </TableCell>
+                  <TableCell>
+                    {order.nama_lengkap}
+                  </TableCell>
+                  <TableCell>
+                    {moment(order.createdAt).format('DD/MM/yyyy')}
+                  </TableCell>
+                  <TableCell>
+                    <SeverityPill
+                      color={(order.status === 'Diterima' && 'success')
+                      || (order.status === 'Ditolak' && 'error')
+                      || 'warning'}
+                    >
+                      {order.status}
+                    </SeverityPill>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Box>
+      </PerfectScrollbar>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          p: 2
+        }}
+      >
+      </Box>
+    </Card>
+  );
   // <Card {...props}>
   //   <CardHeader
   //     subtitle={`${products.length} in total`}
@@ -103,4 +175,4 @@ export const LatestProducts = (props) => (
   //     </Button>
   //   </Box>
   // </Card>
-);
+// );
