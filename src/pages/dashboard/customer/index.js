@@ -27,7 +27,7 @@ const Customers = ({reqUser}) => (
         <Box sx={{ mt: 3 }}>
           <LatestOrders data={reqUser}/>
         </Box>
-        <Box
+        {/* <Box
           sx={{
             display: 'flex',
             justifyContent: 'center',
@@ -39,7 +39,7 @@ const Customers = ({reqUser}) => (
             count={3}
             size="small"
           />
-        </Box>
+        </Box> */}
       </Container>
     </Box>
   </>

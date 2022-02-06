@@ -50,8 +50,9 @@ import { SeverityPill } from '../severity-pill';
 //   }
 // ];
 
-export const LatestProducts = (props) => (
-    <Card {...props}>
+export const LatestProducts = (props) => {
+  return(
+  <Card {...props}>
       <CardHeader title="Produk" />
       <PerfectScrollbar>
         <Box sx={{ minWidth: 800 }}>
@@ -78,7 +79,9 @@ export const LatestProducts = (props) => (
                   </Tooltip>
                 </TableCell>
                 <TableCell>
+                  <Box sx={{px:2}}>
                   Actions
+                  </Box>
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -89,22 +92,21 @@ export const LatestProducts = (props) => (
                   key={order._id}
                 >
                   <TableCell>
-                    {order.nik}
+                    {order.title}
                   </TableCell>
                   <TableCell>
-                    {order.nama_lengkap}
+                    {order.author?.nama_lengkap}
                   </TableCell>
                   <TableCell>
                     {moment(order.createdAt).format('DD/MM/yyyy')}
                   </TableCell>
                   <TableCell>
-                    <SeverityPill
-                      color={(order.status === 'Diterima' && 'success')
-                      || (order.status === 'Ditolak' && 'error')
-                      || 'warning'}
-                    >
-                      {order.status}
-                    </SeverityPill>
+                    <Button color="info">
+                      Detail
+                    </Button>
+                    <Button color="error">
+                      Hapus
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -122,6 +124,8 @@ export const LatestProducts = (props) => (
       </Box>
     </Card>
   );
+}
+    
   // <Card {...props}>
   //   <CardHeader
   //     subtitle={`${products.length} in total`}

@@ -1,4 +1,4 @@
-import { Box, Container, TextField, FormControl, InputLabel, Select, MenuItem, Typography, Button } from '@mui/material';
+import { Box, Container, TextField, FormControl, InputLabel, Select, MenuItem, Typography, Button, TextareaAutosize, Grid, FormLabel, FormHelperText } from '@mui/material';
 import { useForm } from 'react-hook-form'; 
 import baseURL from "../../api/baseURL";
 import { useRouter } from "next/router";
@@ -40,9 +40,9 @@ export const CreateFile = (props) => {
   }
 
   return (
-    <Box>
-      <ToastContainer
-                  position="top-center"
+    <Container>
+      {/* <ToastContainer
+                  position="center"
                   autoClose={5000}
                   hideProgressBar={false}
                   newestOnTop={false}
@@ -51,33 +51,42 @@ export const CreateFile = (props) => {
                   pauseOnFocusLoss
                   draggable
                   pauseOnHover
-                />
-      <Container>
-        <Box fullWidth >
-          <form onSubmit={handleSubmit(onSubmit)}>
+                /> */}
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Grid
+            container
+            fullWidth
+            spacing={0}
+          >       
+        <Box sx={{m:'auto'}}>
           <Typography variant="h5" color="initial">Tambah Akun</Typography>
-          <TextField type='text' {...register('nik')} id="outlined-basic" label="NIK" />
-          <TextField type='text' {...register('nama_lengkap')} id='outlined-basic' label='Nama Lengkap' />
-          <TextField type='text' {...register('no_hp')} id='outlined-basic' label='No Hp' />
-          <TextField type='email' {...register('email')} id='outlined-basic' label='Email' />
-          <TextField type='password' {...register('password')} id='outlined-basic' label='Kata Sandi' />
-          <TextField type='text' {...register('alamat')} id='outlined-basic' label='Alamat' />
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Jenis Kelamin</InputLabel>
-            <Select
-              type='select' {...register('jenis_kelamin')}
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="Jenis Kelamin"
-            >
-              <MenuItem value={'Laki-laki'}>Laki-laki</MenuItem>
-              <MenuItem value={'Perempuan'}>Perempuan</MenuItem>
-            </Select>
-          </FormControl>
-          <Button type='submit' variant='contained'>Submit</Button>
-          </form>
         </Box>
+            <FormControl fullWidth sx={{py:2}}>
+              <TextField size='small' variant='filled' margin='dense' type='text' {...register('nik')} id="outlined-size-small" label="NIK" />
+              <TextField size='small' variant='filled' margin='dense' type='text' {...register('nama_lengkap')} id='outlined-size-small' label='Nama Lengkap' />
+              <TextField size='small' variant='filled' margin='dense' type='text' {...register('no_hp')} id='outlined-size-small' label='No Hp' />
+              <TextField size='small' variant='filled' margin='dense' type='email' {...register('email')} id='outlined-size-small' label='Email' />
+              <TextField size='small' variant='filled' margin='dense' type='password' {...register('password')} id='outlined-size-small' label='Kata Sandi' />
+              <TextField size='small' variant='filled' margin='dense' type='text' {...register('alamat')} id='outlined-size-small' label='Alamat'/>
+                <FormControl variant='filled' size='small' sx={{pt:1}}>
+                  <InputLabel sx={{pt:1}} id="demo-simple-select-label">Jenis Kelamin</InputLabel>
+                  <Select
+                    type='select' {...register('jenis_kelamin')}
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Jenis Kelamin"
+                    >
+                    <MenuItem value={'Laki-laki'}>Laki-laki</MenuItem>
+                    <MenuItem value={'Perempuan'}>Perempuan</MenuItem>
+                  </Select>
+                </FormControl>
+              </FormControl>
+              <Box sx={{m:'auto'}}>
+                <Button type='submit' variant='contained'>Tambahkan</Button>
+              </Box>
+          </Grid>
+    </form>
       </Container>
-    </Box>
   );
 };
+

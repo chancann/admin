@@ -35,7 +35,7 @@ export const AccountList = ({...props}) => {
 
       if (response.data.status === 200) {
         toast.warning('User Deleted!', {
-          position: "top-center",
+          position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -54,17 +54,6 @@ export const AccountList = ({...props}) => {
   
   return (
     <Card {...props}>
-            <ToastContainer
-                  position="top-center"
-                  autoClose={5000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                />
       <PerfectScrollbar>
         <Box sx={{ minWidth: 1024 }}>
           <Table>
@@ -83,7 +72,9 @@ export const AccountList = ({...props}) => {
                   Date
                 </TableCell>
                 <TableCell>
+                  <Box sx={{px:2}}>
                   Actions
+                  </Box>
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -120,7 +111,7 @@ export const AccountList = ({...props}) => {
                         color="textPrimary"
                         variant="body1"
                       >
-                        {user.nama_lengkap}
+                        {user.nik}
                       </Typography>
                     </Box>
                   </TableCell>
@@ -144,13 +135,25 @@ export const AccountList = ({...props}) => {
                         <Typography id="modal-modal-title" variant="h6" component="h2">
                           {user.email}
                         </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        {/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                           Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                        </Typography>
+                        </Typography> */}
                       </Box>
                     </Modal>
-                    <Button >Details</Button>
-                    <Button onClick={()=> {deleteUser(user._id)}}>Delete</Button>
+                    <Button color="info">Detail</Button>
+                    <Button color="error" onClick={()=> {deleteUser(user._id)}}>Hapus
+                      <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                      />
+                    </Button>
                   </TableCell>
                 </TableRow>
                 
@@ -159,7 +162,7 @@ export const AccountList = ({...props}) => {
           </Table>
         </Box>
       </PerfectScrollbar>
-      <TablePagination
+      {/* <TablePagination
         component="div"
         // count={user.length}
         // onPageChange={handlePageChange}
@@ -167,7 +170,7 @@ export const AccountList = ({...props}) => {
         // page={page}
         // rowsPerPage={limit}
         rowsPerPageOptions={[5, 10, 25]}
-      />
+      /> */}
     </Card>
   );
 };

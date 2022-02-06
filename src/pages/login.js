@@ -78,11 +78,14 @@ const Login = () => {
           alignItems: 'center',
           display: 'flex',
           flexGrow: 1,
-          minHeight: '100%'
+          minHeight: '100%',
+          // bgcolor: 'text.primary',
         }}
       >
-        <Container maxWidth="sm">
-          <Typography variant="h5" align='center'>Selamat datang</Typography>
+        <Container maxWidth="xs">
+          <Box sx={{mb:2}}>
+            <Typography color="textPrimary" variant="h4" align='center'>Selamat Datang</Typography>
+          </Box>
           {/* <NextLink
             href="/"
             passHref
@@ -164,19 +167,21 @@ const Login = () => {
             <TextField
               error={Boolean(formik.touched.email && formik.errors.email)}
               fullWidth
+              id='filled-basic'
               helperText={formik.touched.email && formik.errors.email}
-              label="Email Address"
+              label="Email"
               margin="normal"
               name="email"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               type="email"
               value={formik.values.email}
-              variant="outlined"
+              variant="filled"
             />
             <TextField
               error={Boolean(formik.touched.password && formik.errors.password)}
               fullWidth
+              id='filled-basic'
               helperText={formik.touched.password && formik.errors.password}
               label="Password"
               margin="normal"
@@ -185,7 +190,7 @@ const Login = () => {
               onChange={formik.handleChange}
               type="password"
               value={formik.values.password}
-              variant="outlined"
+              variant="filled"
             />
             <Box sx={{ py: 2 }}>
               <Button

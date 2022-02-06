@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import { Box, Button, Divider, Drawer, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, Divider, Drawer, Typography, useMediaQuery, ListItem } from '@mui/material';
 import { ChartBar as ChartBarIcon } from '../icons/chart-bar';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { ShoppingBag as ShoppingBagIcon } from '../icons/shopping-bag';
@@ -55,12 +55,14 @@ const items = [
 ];
 
 export const DashboardSidebar = (props) => {
+  const { href, icon, title, ...others } = props;
   const { open, onClose } = props;
   const router = useRouter();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'), {
     defaultMatches: true,
     noSsr: false
   });
+  const active = href ? (router.pathname === href) : false;
 
   useEffect(
     () => {
@@ -106,13 +108,44 @@ export const DashboardSidebar = (props) => {
               href={item.href}
               title={item.title}
             />
-          ))}  
-            <Button onClick={()=>{
-              Cookies.remove('token')
-              router.push('/login')
-            }}>
-              <LogoutIcon/> Logout
+          ))}
+          <ListItem sx={{
+              display:'flex',
+              mb: 0.5,
+              py: 0,
+              px: 1.7 }}>
+            <Button 
+              disableRipple
+              sx={{
+                backgroundColor: active && 'rgba(255,255,255, 0.08)',
+                borderRadius: 1,
+                color: active ? 'secondary.main' : 'neutral.300',
+                fontWeight: active && 'fontWeightBold',
+                justifyContent: 'flex-start',
+                px: 3,
+                textAlign: 'left',
+                textTransform: 'none',
+                width: '100%',
+                '& .MuiButton-startIcon': {
+                  color: active ? 'secondary.main' : 'neutral.400'
+                },
+                '&:hover': {
+                  backgroundColor: 'rgba(255,255,255, 0.08)'
+                }
+              }}
+              onClick={()=>{
+                Cookies.remove('token')
+                router.push('/login')
+              }}>
+                <LogoutIcon fontSize="small"/> 
+              <Box sx={{
+                flexGrow: 1,
+                px: 0.8
+              }}>
+                Keluar
+              </Box>
             </Button>
+              </ListItem>  
         </Box>
       </Box>
     </>

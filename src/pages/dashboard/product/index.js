@@ -6,8 +6,10 @@ import { ProductListToolbar } from '../../../components/product/product-list-too
 import { DashboardLayout } from '../../../components/dashboard-layout';
 // import { LatestOrders } from '../../../components/dashboard/listOrder';
 import { LatestProducts } from '../../../components/dashboard/listProduct';
+import baseURL from '../../../api/baseURL';
 
-const Products = () => (
+
+const Products = ({product}) => (
   <>
     <Head>
       <title>
@@ -23,14 +25,8 @@ const Products = () => (
     >
       <Container maxWidth={false}>
         <ProductListToolbar />
-        <Box
-            item
-            lg={12}
-            md={6}
-            xl={3}
-            xs={12}
-          >
-            <LatestProducts/>
+          <Box sx={{ mt: 3 }}>
+            <LatestProducts data={product}/>
           </Box>
         {/* <Box sx={{ pt: 3 }}>
           <Grid
@@ -74,5 +70,16 @@ Products.getLayout = (page) => (
     {page}
   </DashboardLayout>
 );
+
+export async function getServerSideProps(context) {
+  const responseUser = await baseURL.get("/api/product")
+    const product = responseUser.data.data.data
+    // console.log(product)
+
+  
+  return {
+    props: {product}, // will be passed to the page component as props
+  }
+}
 
 export default Products;

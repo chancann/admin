@@ -3,7 +3,7 @@ import { Box, Container, Grid, Typography } from '@mui/material';
 // import { AccountProfile } from '../components/account/account-profile';
 // import { AccountProfileDetails } from '../components/account/account-profile-details';
 import { DashboardLayout } from '../../../components/dashboard-layout';
-import { AccountList } from '../../../components/dashboard/account-list';
+import { AccountList } from '../../../components/dashboard/listAccount';
 import { AccountListToolbar } from '../../../components/account/account-list-toolbar';
 import { customers } from '../../../__mocks__/customers';
 // import { getServerSideProps } from '..';
@@ -31,7 +31,9 @@ const Account = ({user}) => (
         >
           Pengguna
         </Typography> */}
-        <AccountList data={user}/>
+        <Box sx={{ mt: 3 }}>
+          <AccountList data={user}/>
+        </Box>
         {/* <Grid
           container
           spacing={3}

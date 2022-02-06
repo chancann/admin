@@ -97,7 +97,7 @@ const router = useRouter()
   
       if (response.data.status === 200) {
         toast.success('Verified', {
-          position: "top-center",
+          position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -126,7 +126,7 @@ const router = useRouter()
   
       if (response.data.status === 200) {
         toast.warning('User Declined!', {
-          position: "top-center",
+          position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -145,17 +145,6 @@ const router = useRouter()
 
   return (
     <Card {...props}>
-    <ToastContainer
-                  position="top-center"
-                  autoClose={5000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                />
     <CardHeader title="Permintaan" />
     <PerfectScrollbar>
       <Box sx={{ minWidth: 800 }}>
@@ -182,7 +171,9 @@ const router = useRouter()
                 </Tooltip>
               </TableCell>
               <TableCell>
+                <Box sx={{px:2}}>
                 Actions
+                </Box>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -202,8 +193,21 @@ const router = useRouter()
                   {moment(order.createdAt).format('DD/MM/yyyy')}
                 </TableCell>
                 <TableCell>
-                  <Button onClick={()=> {acceptHandler(order._id)}}>Terima</Button>
-                  <Button onClick={()=> {discardHandler(order._id)}}>Tolak</Button>
+                  <Button color="success" onClick={()=> {acceptHandler(order._id)}}>
+                    <ToastContainer
+                      position="top-right"
+                      autoClose={5000}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                    />
+                    Terima
+                  </Button>
+                  <Button color="error" onClick={()=> {discardHandler(order._id)}}>Tolak</Button>
                 </TableCell>
                 
               </TableRow>

@@ -19,7 +19,7 @@ const Dashboard = ({reqUser, reqLength, userLength, productLength}) => (
       component="main"
       sx={{
         flexGrow: 1,
-        py: 8
+        py: 6
       }}
     >
       <Container maxWidth={false}>
@@ -57,6 +57,7 @@ const Dashboard = ({reqUser, reqLength, userLength, productLength}) => (
 
         </Grid>
           <Box
+            sx={{pt:3}}
             item
             lg={12}
             md={6}

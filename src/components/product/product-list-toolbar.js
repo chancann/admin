@@ -20,7 +20,7 @@ export const ProductListToolbar = (props) => (
         display: 'flex',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
-        m: -1
+        mt: -1
       }}
     >
       <Typography
