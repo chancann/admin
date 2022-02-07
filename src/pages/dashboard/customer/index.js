@@ -21,7 +21,7 @@ const Customers = ({reqUser}) => (
         flexGrow: 1,
         py: 8
       }}
-    >
+      >
       <Container maxWidth={false}>
         <CustomerListToolbar />
         <Box sx={{ mt: 3 }}>

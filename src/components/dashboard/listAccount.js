@@ -140,7 +140,7 @@ export const AccountList = ({...props}) => {
                         </Typography> */}
                       </Box>
                     </Modal>
-                    <Button color="info">Detail</Button>
+                    <Button href={`/dashboard/details/${user._id}`} color="info">Detail</Button>
                     <Button color="error" onClick={()=> {deleteUser(user._id)}}>Hapus
                       <ToastContainer
                         position="top-right"

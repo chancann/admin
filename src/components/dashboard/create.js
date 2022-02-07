@@ -67,7 +67,7 @@ export const CreateFile = (props) => {
               <TextField size='small' variant='filled' margin='dense' type='text' {...register('no_hp')} id='outlined-size-small' label='No Hp' />
               <TextField size='small' variant='filled' margin='dense' type='email' {...register('email')} id='outlined-size-small' label='Email' />
               <TextField size='small' variant='filled' margin='dense' type='password' {...register('password')} id='outlined-size-small' label='Kata Sandi' />
-              <TextField size='small' variant='filled' margin='dense' type='text' {...register('alamat')} id='outlined-size-small' label='Alamat'/>
+              <TextField multiline size='small' variant='filled' margin='dense' type='text' {...register('alamat')} id='outlined-size-small' label='Alamat'/>
                 <FormControl variant='filled' size='small' sx={{pt:1}}>
                   <InputLabel sx={{pt:1}} id="demo-simple-select-label">Jenis Kelamin</InputLabel>
                   <Select
