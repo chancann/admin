@@ -27,16 +27,16 @@ import CryptoJs from 'crypto-js'
 
 export const DetailsAccount = (props) => {
   const [form , setForm] = useState({
-    alamat: "admin",
-email: "admin@sepatan.com",
-jenis_kelamin: "Laki-laki",
-nama_lengkap: "admin",
-nik: "admin",
-no_hp: 62,
-password: "U2FsdG"
+    alamat: "",
+    email: "",
+    jenis_kelamin: "",
+    nama_lengkap: "",
+    nik: "",
+    no_hp: "",
+    password: ""
   })
   const router = useRouter()
-  const cryptoSec = 'qwedxzasdfrtyujnbvfghjmnbhyuikmjioplkqsdcfttyhjmkopokmnjhytfcxsaq'
+  const cryptoSec = 'pojokumkmkecamatansepatankabupatentangerang'
 
   const getDetailAccount = async() => {
     try {

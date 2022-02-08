@@ -16,6 +16,10 @@ import {
 } from '@mui/material';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { SeverityPill } from '../severity-pill';
+import { useRouter } from "next/router";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import baseURL from "../../api/baseURL";
 
 // const products = [
 //   {
@@ -51,6 +55,28 @@ import { SeverityPill } from '../severity-pill';
 // ];
 
 export const LatestProducts = (props) => {
+  const router = useRouter()
+  const deleteProduct = async (id) => {
+    try {
+      const response = await baseURL.delete(`api/product/${id}`)
+      if (response.data.status === 200) {
+        toast.warning('Product Deleted!', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
+
+          router.reload(window.location.pathname)
+      }
+  
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return(
   <Card {...props}>
       <CardHeader title="Produk" />
@@ -104,8 +130,19 @@ export const LatestProducts = (props) => {
                     <Button color="info">
                       Detail
                     </Button>
-                    <Button color="error">
+                    <Button color="error" onClick={()=> {deleteProduct(order._id)}}>
                       Hapus
+                      <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                      />
                     </Button>
                   </TableCell>
                 </TableRow>

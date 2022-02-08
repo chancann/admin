@@ -30,7 +30,6 @@ export const AccountList = ({...props}) => {
 
   const deleteUser = async (id) => {
     try {
-  
       const response = await baseURL.delete(`api/user/${id}`)
 
       if (response.data.status === 200) {
@@ -79,7 +78,7 @@ export const AccountList = ({...props}) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {props.data?.map((user, index) => (
+              {props.data?.map((user) => (
                 
                 <TableRow
                   hover
