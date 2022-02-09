@@ -63,6 +63,10 @@ export const DetailsAccount = (props) => {
     }
   }
 
+  const back = () => {
+    router.push('/dashboard/account')
+  }
+
   useEffect(() => {
     getDetailAccount()
   }, [router]);
@@ -91,6 +95,12 @@ export const DetailsAccount = (props) => {
       noValidate
       autoComplete="off"
     >
+      <Typography
+        sx={{ m: 1 }}
+        variant="h4"
+      >
+        Detail
+      </Typography>
       <div>
         <TextField
           id="outlined-basic"
@@ -160,7 +170,7 @@ export const DetailsAccount = (props) => {
       </div>
     </Box>
       <Box sx={{
-        '& .MuiTextField-root': { m: 1, width: '50ch' },
+        '& .MuiTextField-root': { m: 1, width: '51.5ch' },
       }}>
         <TextField
          onChange={(e) => {
@@ -173,10 +183,13 @@ export const DetailsAccount = (props) => {
           label="Alamat"
         />
         </Box>
+      <Box sx={{m:1}}>
+      <Button color='info' onClick={back}>Kembali</Button>
+      <Button color='primary' variant='contained' onClick={saveUser}>Simpan</Button>
+      </Box>
       </Container>
       </Box>
       </CardContent>
-      <Button onClick={saveUser}>Save</Button>
       </Card>
     </DashboardLayout>
   );  
