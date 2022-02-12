@@ -10,7 +10,7 @@ export const CreateFile = (props) => {
   const {register, handleSubmit, formState:{errors}} = useForm();  
   const onSubmit = async (data) => {
     try {
-      const response = await baseURL.post("/api/user/add",{...data, no_hp: parseInt(`${62}${data.no_hp.slice(1,-1)}`)});
+      const response = await baseURL.post("/api/user/add",{...data, no_hp: parseInt(`${62}${data.no_hp.slice(1)}`)});
         console.log(response);
       if(response.data.status === 200){
         toast.success('User Created', {
@@ -41,17 +41,6 @@ export const CreateFile = (props) => {
 
   return (
     <Container>
-      {/* <ToastContainer
-                  position="center"
-                  autoClose={5000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                /> */}
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid
             container
