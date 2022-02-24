@@ -1,13 +1,13 @@
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
-import Cookies from 'js-cookie';
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { Box, Button, Container, Grid, Link, TextField, Typography } from "@mui/material";
+import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
-import baseURL from '../api/baseURL';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import baseURL from "../api/baseURL";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const router = useRouter();
@@ -15,42 +15,21 @@ const Login = () => {
   const notify = () => toast();
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: ''
+      email: "",
+      password: "",
     },
     validationSchema: Yup.object({
-      email: Yup
-        .string()
-        .email(
-          'Must be a valid email')
-        .max(255)
-        .required(
-          'Email is required'),
-      password: Yup
-        .string()
-        .max(255)
-        .required(
-          'Password is required')
+      email: Yup.string().email("Must be a valid email").max(255).required("Email is required"),
+      password: Yup.string().max(255).required("Password is required"),
     }),
     onSubmit: async (data) => {
       try {
         const doLogin = await baseURL.post("/api/user/login", data);
-        if (doLogin.data.status === 200){
-          const decoded = jwt_decode(doLogin.data.data.token)
-          if (decoded.role === 'admin'){
-          Cookies.set('token', doLogin.data.data.token, {expires:1})
-          toast.success('Welcome to dashboard!', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            });
-          router.push('/dashboard')
-          } else {
-            toast.warn('Wrong credentials!', {
+        if (doLogin.data.status === 200) {
+          const decoded = jwt_decode(doLogin.data.data.token);
+          if (decoded.role === "admin") {
+            Cookies.set("token", doLogin.data.data.token, { expires: 1 });
+            toast.success("Welcome to dashboard!", {
               position: "top-right",
               autoClose: 5000,
               hideProgressBar: false,
@@ -58,13 +37,24 @@ const Login = () => {
               pauseOnHover: true,
               draggable: true,
               progress: undefined,
-              });
+            });
+            router.push("/dashboard");
           }
+        } else {
+          toast.warn("Wrong credentials!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
         }
       } catch (error) {
         console.log(error);
       }
-    }
+    },
   });
 
   return (
@@ -75,16 +65,18 @@ const Login = () => {
       <Box
         component="main"
         sx={{
-          alignItems: 'center',
-          display: 'flex',
+          alignItems: "center",
+          display: "flex",
           flexGrow: 1,
-          minHeight: '100%',
+          minHeight: "100%",
           // bgcolor: 'text.primary',
         }}
       >
         <Container maxWidth="xs">
-          <Box sx={{mb:2}}>
-            <Typography color="textPrimary" variant="h4" align='center'>Selamat Datang</Typography>
+          <Box sx={{ mb: 2 }}>
+            <Typography color="textPrimary" variant="h4" align="center">
+              Selamat Datang
+            </Typography>
           </Box>
           {/* <NextLink
             href="/"
@@ -167,7 +159,7 @@ const Login = () => {
             <TextField
               error={Boolean(formik.touched.email && formik.errors.email)}
               fullWidth
-              id='filled-basic'
+              id="filled-basic"
               helperText={formik.touched.email && formik.errors.email}
               label="Email"
               margin="normal"
@@ -181,7 +173,7 @@ const Login = () => {
             <TextField
               error={Boolean(formik.touched.password && formik.errors.password)}
               fullWidth
-              id='filled-basic'
+              id="filled-basic"
               helperText={formik.touched.password && formik.errors.password}
               label="Password"
               margin="normal"
@@ -213,7 +205,7 @@ const Login = () => {
                   draggable
                   pauseOnHover
                 />
-                Sign In 
+                Sign In
               </Button>
             </Box>
             {/* <Typography
@@ -242,6 +234,6 @@ const Login = () => {
       </Box>
     </>
   );
-};  
+};
 
 export default Login;
