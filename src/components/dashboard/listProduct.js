@@ -127,7 +127,7 @@ export const LatestProducts = (props) => {
                     {moment(order.createdAt).format('DD/MM/yyyy')}
                   </TableCell>
                   <TableCell>
-                    <Button color="info">
+                    <Button color="info" href={`/dashboard/detail/${order._id}`}>
                       Detail
                     </Button>
                     <Button color="error" onClick={()=> {deleteProduct(order._id)}}>

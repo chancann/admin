@@ -32,52 +32,48 @@ import CryptoJs from "crypto-js";
 //   timezone: 'GTM-7'
 // };
 
-export const DetailsAccount = (props) => {
+export const DetailProduct = (props) => {
   const [form, setForm] = useState({
-    alamat: "",
-    email: "",
-    jenis_kelamin: "",
-    nama_lengkap: "",
-    nik: "",
-    no_hp: "",
-    password: "",
+    image: "",
+    title: "",
+    category: "",
+    author: "",
+    description: "",
+    price: "",
   });
   const router = useRouter();
-  const cryptoSec = "pojokumkmkecamatansepatankabupatentangerang";
 
-  const getDetailAccount = async () => {
+  const getDetailProduct = async () => {
     try {
-      const response = await baseURL(`/api/user/details/${router.query.id}`);
+      const response = await baseURL(`/api/product/details/${router.query.id}`);
+      console.log(response);
       if (response.data.status === 200) {
-        const decryptPassword = CryptoJs.AES.decrypt(response.data.data.password, cryptoSec);
-        const userPassword = decryptPassword.toString(CryptoJs.enc.Utf8);
-
-        setForm({ ...response.data.data, password: userPassword });
+        setForm({ ...response.data.data });
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const saveUser = async () => {
-    try {
-      const response = await baseURL.put(`/api/user/update/${router.query.id}`, form, {
-        new: true,
-      });
-      if (response.data.status === 200) {
-        router.push("/dashboard/account");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const saveUser = async () => {
+  //   try {
+  //     const response = await baseURL.put(`/api/user/update/${router.query.id}`, form, {
+  //       new: true,
+  //     });
+  //     if (response.data.status === 200) {
+  //       router.push("/dashboard/account");
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const back = () => {
-    router.push("/dashboard/account");
+    router.push("/dashboard/product");
   };
 
   useEffect(() => {
-    getDetailAccount();
+    getDetailProduct();
   }, [router]);
 
   return (
@@ -104,72 +100,55 @@ export const DetailsAccount = (props) => {
                 autoComplete="off"
               >
                 <Typography sx={{ m: 1 }} variant="h4">
-                  Detail Pengguna
+                  Detail Produk
                 </Typography>
                 <div>
                   <TextField
                     id="outlined-basic"
                     variant="filled"
-                    label="NIK"
+                    label="Nama Produk"
                     onChange={(e) => {
-                      setForm({ ...form, nik: e.target.value });
+                      setForm({ ...form, title: e.target.value });
                     }}
-                    value={form.nik}
+                    value={form.title}
                   />
                   <TextField
                     id="outlined-basic"
                     variant="filled"
-                    label="Nama Lengkap"
+                    label="Harga"
                     onChange={(e) => {
-                      setForm({ ...form, nama_lengkap: e.target.value });
+                      setForm({ ...form, price: e.target.value });
                     }}
-                    value={form.nama_lengkap}
-                  />
-                </div>
-                <div>
-                  <TextField
-                    id="outlined-basic"
-                    variant="filled"
-                    label="Email"
-                    onChange={(e) => {
-                      setForm({ ...form, email: e.target.value });
-                    }}
-                    value={form.email}
-                  />
-                  <TextField
-                    id="outlined-basic"
-                    variant="filled"
-                    label="Password"
-                    onChange={(e) => {
-                      setForm({ ...form, password: e.target.value });
-                    }}
-                    value={form.password}
+                    value={form.price}
                   />
                 </div>
                 <div>
                   <TextField
                     id="outlined-basic"
                     variant="filled"
-                    label="No HP"
+                    label="Gambar"
                     onChange={(e) => {
                       setForm({ ...form, no_hp: e.target.value });
                     }}
                     value={form.no_hp}
                   />
                   <FormControl variant="filled" sx={{ m: 1, width: "25ch" }}>
-                    <InputLabel id="demo-simple-select-label">Jenis Kelamin</InputLabel>
+                    <InputLabel id="demo-simple-select-label">Kategori</InputLabel>
                     <Select
                       onChange={(e) => {
-                        setForm({ ...form, jenis_kelamin: e.target.value });
+                        setForm({ ...form, category: e.target.value });
                       }}
-                      value={form.jenis_kelamin}
+                      value={form.category}
                       type="select"
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       label="Jenis Kelamin"
                     >
-                      <MenuItem value={"Laki-laki"}>Laki-laki</MenuItem>
-                      <MenuItem value={"Perempuan"}>Perempuan</MenuItem>
+                      <MenuItem value={"Makanan"}>Makanan</MenuItem>
+                      <MenuItem value={"Minuman"}>Minuman</MenuItem>
+                      <MenuItem value={"Pakaian"}>Pakaian</MenuItem>
+                      <MenuItem value={"Kerajinan Tangan"}>Kerajinan Tangan</MenuItem>
+                      <MenuItem value={"Perawatan Tubuh"}>Perawatan Tubuh</MenuItem>
                     </Select>
                   </FormControl>
                 </div>
@@ -181,21 +160,18 @@ export const DetailsAccount = (props) => {
               >
                 <TextField
                   onChange={(e) => {
-                    setForm({ ...form, alamat: e.target.value });
+                    setForm({ ...form, description: e.target.value });
                   }}
-                  value={form.alamat}
+                  value={form.description}
                   multiline
                   id="outlined-basic"
                   variant="filled"
-                  label="Alamat"
+                  label="Deskripsi"
                 />
               </Box>
               <Box sx={{ m: 1 }}>
                 <Button color="info" onClick={back}>
                   Kembali
-                </Button>
-                <Button color="primary" variant="contained" onClick={saveUser}>
-                  Simpan
                 </Button>
               </Box>
             </Container>
@@ -206,4 +182,4 @@ export const DetailsAccount = (props) => {
   );
 };
 
-export default DetailsAccount;
+export default DetailProduct;
