@@ -48,7 +48,6 @@ export const DetailProduct = (props) => {
       const response = await baseURL(`/api/product/details/${router.query.id}`);
       if (response.data.status === 200) {
         setForm({ ...response.data.data });
-
       }
     } catch (error) {
       console.log(error);
@@ -123,15 +122,6 @@ export const DetailProduct = (props) => {
                   />
                 </div>
                 <div>
-                  <TextField
-                    id="outlined-basic"
-                    variant="filled"
-                    label="Gambar"
-                    onChange={(e) => {
-                      setForm({ ...form, no_hp: e.target.value });
-                    }}
-                    value={form.no_hp}
-                  />
                   <FormControl variant="filled" sx={{ m: 1, width: "25ch" }}>
                     <InputLabel id="demo-simple-select-label">Kategori</InputLabel>
                     <Select
@@ -151,28 +141,36 @@ export const DetailProduct = (props) => {
                       <MenuItem value={"Perawatan Tubuh"}>Perawatan Tubuh</MenuItem>
                     </Select>
                   </FormControl>
+                  <Box
+                    sx={{
+                      "& .MuiTextField-root": { m: 1, width: "51.5ch" },
+                    }}
+                  >
+                    <TextField
+                      onChange={(e) => {
+                        setForm({ ...form, description: e.target.value });
+                      }}
+                      value={form.description}
+                      multiline
+                      id="outlined-basic"
+                      variant="filled"
+                      label="Deskripsi"
+                    />
+                  </Box>
                 </div>
               </Box>
-              <div>
-                {form.images?.map((image,index) => (
-                  <img width="300px" src={`${baseURL.defaults.baseURL}/${image.data}`} key={index + 29} alt="product image"/>
+              <Box sx={{ m: 1, display: "inline-flex" }}>
+                <Typography>Gambar :</Typography>
+                {form.images?.map((image, index) => (
+                  <Box sx={{ p: 2 }}>
+                    <img
+                      width="200px"
+                      src={`${baseURL.defaults.baseURL}/${image.data}`}
+                      key={index + 29}
+                      alt="product image"
+                    />
+                  </Box>
                 ))}
-              </div>
-              <Box
-                sx={{
-                  "& .MuiTextField-root": { m: 1, width: "51.5ch" },
-                }}
-              >
-                <TextField
-                  onChange={(e) => {
-                    setForm({ ...form, description: e.target.value });
-                  }}
-                  value={form.description}
-                  multiline
-                  id="outlined-basic"
-                  variant="filled"
-                  label="Deskripsi"
-                />
               </Box>
               <Box sx={{ m: 1 }}>
                 <Button color="info" onClick={back}>
