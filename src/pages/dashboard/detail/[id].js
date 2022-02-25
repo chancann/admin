@@ -34,7 +34,7 @@ import CryptoJs from "crypto-js";
 
 export const DetailProduct = (props) => {
   const [form, setForm] = useState({
-    image: "",
+    images: [],
     title: "",
     category: "",
     author: "",
@@ -46,9 +46,9 @@ export const DetailProduct = (props) => {
   const getDetailProduct = async () => {
     try {
       const response = await baseURL(`/api/product/details/${router.query.id}`);
-      console.log(response);
       if (response.data.status === 200) {
         setForm({ ...response.data.data });
+
       }
     } catch (error) {
       console.log(error);
@@ -153,6 +153,11 @@ export const DetailProduct = (props) => {
                   </FormControl>
                 </div>
               </Box>
+              <div>
+                {form.images?.map((image,index) => (
+                  <img width="300px" src={`${baseURL.defaults.baseURL}/${image.data}`} key={index + 29} alt="product image"/>
+                ))}
+              </div>
               <Box
                 sx={{
                   "& .MuiTextField-root": { m: 1, width: "51.5ch" },
